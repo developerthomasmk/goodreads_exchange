@@ -1,6 +1,6 @@
 from flask import flash, jsonify, redirect, render_template, request, session, url_for
 from app.config import db
-from app.models import User
+from app.models import Book, User
 
 
 def init_routes(app):
@@ -60,3 +60,14 @@ def init_routes(app):
         
         return render_template('register.html')
     
+    
+    @app.route('/home')
+    def home():
+        return render_template('home.html')
+    
+    @app.route('/get_books', methods=['GET'])
+    def get_books():
+        current_user_id = session.get('user_id')
+        books = Book.query.filter((Book.user_id != current_user_id) & (Book.status == 'Available')).all()
+        books_data =[book.to_dict() for book in books]
+        return jsonify(books_data)

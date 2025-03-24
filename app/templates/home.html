@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/fav_icon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+   
+    <header class="top-bar">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+       
+        <div class="right-buttons">
+            <button id="myBooksBtn">📚 My Books</button>
+            <button id="historyBtn">📜 History</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="banner">
+            <img src="{{ url_for('static', filename='images/banner.png') }}" alt="Banner">
+        </section>
+
+        <div class="container">
+            <h2>Available Books for Exchange</h2>
+            <div id="booksList"></div>
+        </div>
+
+    </main>
+
+    <script>
+        const BOOKS_API_URL = "{{ url_for('get_books') }}";
+    </script>
+
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+</body>
+</html>
