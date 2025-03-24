@@ -10,7 +10,6 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = os.urandom(24)
     app.config['UPLOAD_FOLDER'] = 'app/uploads/images'
-    app.config['UPLOAD_FOLDER_PROFILE_PIC'] = 'app/uploads/profile_pics'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.instance_path, 'exchange.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)

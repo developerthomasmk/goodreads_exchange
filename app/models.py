@@ -24,6 +24,7 @@ class Book(db.Model):
     genre = db.Column(db.String(100))
     description = db.Column(db.Text)
     status = db.Column(db.Enum('Available', 'Exchanged', name='book_status'), default='Available')
+    image = db.Column(db.String(100), nullable=False, unique=True)
     owner = db.relationship('User', backref=db.backref('owner', lazy=True))
     
     def to_dict(self):
@@ -34,5 +35,9 @@ class Book(db.Model):
             'author': self.author,
             'genre': self.genre,
             'description': self.description,
-            'status': self.status
+            'status': self.status,
+            'image': self.image,
+            'location': self.owner.location,
+            'latitude': self.owner.latitude,
+            'longitude': self.owner.longitude
         }

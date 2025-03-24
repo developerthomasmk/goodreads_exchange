@@ -1,11 +1,18 @@
-body {
+html, body {
     font-family: Arial, sans-serif;
     background: #f4f4f4;
     display: flex;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    flex-direction: column;
+}
+
+.main {
+    flex: 1; 
+    display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
 }
 
 .register-container {
@@ -62,4 +69,14 @@ p {
 a {
     color: #007bff;
     text-decoration: none;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100vw;
+    position: relative; 
+    bottom: 0;
 }

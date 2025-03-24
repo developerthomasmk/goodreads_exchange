@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.title }}</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/book_details.css">
+</head>
+
+<body>
+
+    <header class="top-bar">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+
+        <div class="right-buttons">
+            <button id="myBooksBtn">📚 My Books</button>
+            <button id="historyBtn">📜 History</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+            <h1>{{ book.title }}</h1>
+            <img src="{{ url_for('image_file', filename='') }}/{{ book.image }}" alt="Book Cover" class="bookImg">
+            <p><strong>Author:</strong> {{ book.author }}</p>
+            <p><strong>Genre:</strong> {{ book.genre }}</p>
+            <p><strong>Description:</strong> {{ book.description }}</p>
+
+            <h3>Book Location</h3>
+            <div id="map"></div>
+
+            <button id="exchangeBook">Exchange Book</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Book Exchange Platform | All Rights Reserved</p>
+    </footer>
+
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    
+    <script>
+        const latitude = "{{ book.owner.latitude }}";
+        const longitude = "{{ book.owner.longitude }}";
+        const bookTitle = "{{ book.title }}";
+
+        console.log("Title:::" + bookTitle)
+        console.log("Lat:::" + latitude)
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var map = L.map("map").setView([latitude, longitude], 13);
+
+            
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            
+            L.marker([latitude, longitude]).addTo(map)
+                .bindPopup(`<b>${bookTitle}</b><br>Available here.`)
+                .openPopup();
+
+            document.getElementById("exchangeBook").addEventListener("click", function () {
+                fetch("/exchange_book/{{ book.book_id }}", { method: "POST" })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                        window.location.href = "/home";
+                    })
+                    .catch(error => console.error("Error:", error));
+            });
+        });
+    </script>
+
+</body>
+
+</html>

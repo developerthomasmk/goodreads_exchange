@@ -11,11 +11,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 let bookCard = document.createElement("div");
                 bookCard.classList.add("book-card");
 
+                console.log("BookId:::"+book.book_id)
+
                 bookCard.innerHTML = `
+                    <img src="${imageUrl + book.image}" alt="${book.username}" class="card-image">
                     <h3>${book.title}</h3>
                     <p>Author: ${book.author}</p>
                     <p>Location: ${book.location}</p>
-                    <button onclick="viewBook(${book.id})">View Details</button>
+                    <button onclick="viewBook(${book.book_id})">View Details</button>
                 `;
 
                 booksList.appendChild(bookCard);
@@ -29,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     fetchBooks();
 
     document.getElementById("myBooksBtn").addEventListener("click", function () {
-        window.location.href = "/my-books";
+        window.location.href = "/mybooks";
     });
 
     document.getElementById("historyBtn").addEventListener("click", function () {
@@ -38,5 +41,5 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 function viewBook(bookId) {
-    window.location.href = `/book/${bookId}`;
+    window.location.href = `/view_book/${bookId}`;
 }
