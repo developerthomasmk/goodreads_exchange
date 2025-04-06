@@ -179,3 +179,15 @@ def init_routes(app):
         db.session.commit()
 
         return jsonify({'success': True, 'message': 'Book exchanged successfully!'})
+    
+    
+    
+    @app.route('/delete_book/<int:book_id>', methods=['POST', 'GET'])
+    def delete(book_id):
+        book = Book.query.get(book_id)
+        if book:
+            db.session.delete(book)
+            db.session.commit()
+            return {'message': 'Book deleted successfully'}, 200
+        else:
+            return {'message': 'Book not found'}, 404
