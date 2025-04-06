@@ -98,3 +98,14 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+.delete-book {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}

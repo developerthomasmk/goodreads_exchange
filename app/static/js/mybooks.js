@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const booksContainer = document.getElementById("booksContainer");
             booksContainer.innerHTML = "";
 
-            if(!data){
+            if (!data) {
                 booksContainer.innerHTML = "<p>You haven't added any books yet.</p>";
                 return;
             }
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            console.log("Data:::"+data.books.length)
+            console.log("Data:::" + data.books.length)
 
             data.books.forEach(book => {
                 const bookCard = document.createElement("div");
@@ -27,9 +27,30 @@ document.addEventListener("DOMContentLoaded", function () {
                     <p><strong>Author:</strong> ${book.author}</p>
                     <p><strong>Genre:</strong> ${book.genre}</p>
                     <p><strong>Status:</strong> ${book.status}</p>
+                    <button class="delete-book">Delete</button>
                 `;
 
                 booksContainer.appendChild(bookCard);
+
+
+                const deleteBtn = bookCard.querySelector('.delete-book');
+                deleteBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const confirmDelete = confirm(`Are you sure you want to delete "${book.title}"?`);
+                    if (confirmDelete) {
+                        fetch(`/delete_book/${book.book_id}`)
+                            .then(response => {
+                                if (response.ok) {
+                                    bookCard.remove();
+                                    location.reload();
+                                } else {
+                                    console.error('Failed to delete book');
+                                }
+                            })
+                            .catch(error => console.error('Error deleting book:', error));
+                    }
+                });
+
             });
         })
         .catch(error => console.error("Error fetching books:", error));
