@@ -41,3 +41,22 @@ class Book(db.Model):
             'latitude': self.owner.latitude,
             'longitude': self.owner.longitude
         }
+        
+
+class ExchangeRequest(db.Model):
+    __tablename__ = 'exchange_requests'
+    
+    request_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    requester_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'), nullable=False)
+    status = db.Column(db.Enum('Pending', 'Accepted', 'Declined', name='request_status'), default='Pending')
+    request_date = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Transaction(db.Model):
+    __tablename__ = 'book_transactions'
+    
+    transaction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'), nullable=False)
+    giver_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    transaction_date = db.Column(db.DateTime, default=datetime.utcnow)
