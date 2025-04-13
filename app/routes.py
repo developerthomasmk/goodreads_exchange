@@ -190,3 +190,8 @@ def init_routes(app):
             return {'message': 'Book deleted successfully'}, 200
         else:
             return {'message': 'Book not found'}, 404
+        
+        
+    @app.route('/history')
+    def my_history():
+        return render_template('history.html')
