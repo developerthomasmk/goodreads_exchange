@@ -1,26 +1,33 @@
 <!DOCTYPE html>
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="/static/css/login.css">
-</head>
-
-<body>
-    <h1>Login</h1>
-    <form action="{{url_for('login')}}" method="POST">
-        <label>Email:</label><input type="email" name="email" required>
-        <label>Password:</label><input type="password" name="password" required>
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="/register">Sign up</a></p>
-    </form>
-
-    <footer>
-        <p>&copy; 2025 Book Exchange Platform | All Rights Reserved</p>
-    </footer>
-</body>
-
+    <title>Facebook Login Page | CodingNepal</title>
+    <link rel="stylesheet" href="/static/css/login_new.css">
+  </head>
+  <body>
+    <div class="container flex">
+      <div class="facebook-page flex">
+        <div class="text">
+          <h1>Good Reads</h1>
+          <p>Meet your next favorite book </p>
+          <p> Explore a century of popular books</p>
+        </div>
+        <form action="{{url_for('login')}}" method="POST">
+          <input type="email" placeholder="Email or phone number" name="email" required>
+          <input type="password" placeholder="Password" name="password" required>
+          <div class="link">
+            <button type="submit" class="login">Login</button>
+            <a href="#" class="forgot">Forgot password?</a>
+          </div>
+          <hr>
+          <div class="button">
+            <a href="/register">Create new account</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

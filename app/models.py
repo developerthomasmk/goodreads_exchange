@@ -48,10 +48,9 @@ class ExchangeRequest(db.Model):
     
     request_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     requester_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'), nullable=False)
     status = db.Column(db.Enum('Pending', 'Accepted', 'Declined', name='request_status'), default='Pending')
-    request_date = db.Column(db.DateTime, default=datetime.utcnow)
     
     sender = db.relationship('User', foreign_keys=[requester_id])
     receiver = db.relationship('User', foreign_keys=[receiver_id])
