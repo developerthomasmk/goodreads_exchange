@@ -1,5 +1,5 @@
 html, body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background: #f4f4f4;
     display: flex;
     align-items: center;
@@ -69,14 +69,4 @@ p {
 a {
     color: #007bff;
     text-decoration: none;
-}
-
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    width: 100vw;
-    position: relative; 
-    bottom: 0;
 }

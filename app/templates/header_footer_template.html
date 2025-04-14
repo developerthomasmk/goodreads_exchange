@@ -17,6 +17,7 @@
 
 <body>
 
+    {% block header %}
     <header class="top-bar">
         <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
 
@@ -26,15 +27,18 @@
             <button id="logoutBtn">⏻ Logout</button>
         </div>
     </header>
+    {% endblock %}
 
-    <main>
+    <main class="{% if self.header() != '' %}with-header{% endif %}">
         {% block content %}{% endblock %}
     </main>
 
+    {% block footer %}
     <footer>
         <p>&copy; 2025 Book Exchange Platform | All Rights Reserved</p>
     </footer>
-
+    {% endblock %}
+    
     {% block scripts %}{% endblock %}
 </body>
 

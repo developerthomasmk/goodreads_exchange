@@ -1,41 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'header_footer_template.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="/static/css/register.css">
-</head>
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
 
-<body>
-    <div class="main">
-        <div class="register-container">
-            <h2>Register</h2>
-            <form id="registerForm">
-                <input type="text" id="name" placeholder="Full Name" required>
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <input type="text" id="phone" placeholder="Phone Number">
-                <input type="text" id="location" placeholder="Location" required>
-                <input type="hidden" id="latitude" name="latitude">
-                <input type="hidden" id="longitude" name="longitude">
-                <button type="submit">Register</button>
-            </form>
-            <p>Already have an account? <a href="/login">Login</a></p>
-        </div>
+{% block title %}Register{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+{% endblock %}
+
+
+{% block content %}
+<div class="main">
+
+    <div class="register-container">
+
+        <h2>Register</h2>
+
+        <form id="registerForm">
+
+            <input type="text" id="name" placeholder="Full Name" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="text" id="phone" placeholder="Phone Number">
+            <input type="text" id="location" placeholder="Location" required>
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+            <button type="submit">Register</button>
+
+        </form>
+
+        <p>Already have an account? <a href="/login">Login</a></p>
 
     </div>
 
-    <footer>
-        <p>&copy; 2025 Book Exchange Platform | All Rights Reserved</p>
-    </footer>
+</div>
+{% endblock %}
 
-    <script>
-        const REGISTER_URL = "{{ url_for('register') }}";
-        const LOGIN_URL = "{{ url_for('login') }}";
-    </script>
-    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
-</body>
-
-</html>
+{% block scripts %}
+<script>
+    const REGISTER_URL = "{{ url_for('register') }}";
+    const LOGIN_URL = "{{ url_for('login') }}";
+</script>
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+{% endblock %}
