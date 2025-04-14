@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>History</title>
+  <link rel="stylesheet" href="/static/css//history.css">
+</head>
+<body>
+  <div class="history-container">
+    <div class="section">
+      <h2 class="toggle-heading">Exchange Requests</h2>
+      <div class="section-content">
+        {% for req in exchange_requests %}
+          <p>You requested "{{ req.book.title }}" from {{ req.receiver.name }} - Status: {{ req.status }}</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="toggle-heading">Books Exchanged</h2>
+      <div class="section-content">
+        {% for book in my_books_in_exchange %}
+          <p>{{ book.title }} by {{ book.author }} - Status: {{ book.status }}</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="toggle-heading">Books Borrowed</h2>
+      <div class="section-content">
+        {% for book in borrowed_books %}
+          <p>{{ book.title }} by {{ book.author }} - Owner: {{ book.owner.name }}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/history.js') }}"></script>
+</body>
+</html>
+
+
+<!-- https://www.w3schools.com/howto/howto_js_collapsible.asp -->
+<!-- https://www.geeksforgeeks.org/how-to-create-a-collapsible-section-using-css-and-javascript/ -->

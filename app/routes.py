@@ -3,7 +3,7 @@ import uuid
 from flask import current_app, flash, jsonify, redirect, render_template, request, send_from_directory, session, url_for
 from app.config import db
 from werkzeug.utils import secure_filename
-from app.models import Book, User
+from app.models import Book, ExchangeRequest, User
 
 
 def init_routes(app):
@@ -174,10 +174,11 @@ def init_routes(app):
         if book.status == 'Exchanged':
             return jsonify({'error': 'Book already exchanged'}), 400
 
-        book.status = 'Exchanged'
+        new_request = ExchangeRequest(requester_id=current_user_id, receiver_id=book.user_id, book_id=book_id)
+        db.session.add(new_request)
         db.session.commit()
 
-        return jsonify({'success': True, 'message': 'Book exchanged successfully!'})
+        return jsonify({'success': True, 'message': 'Book exchange requested successfully!'})
     
     
     
@@ -192,6 +193,57 @@ def init_routes(app):
             return {'message': 'Book not found'}, 404
         
         
+        
+        
+    @app.route('/update-request-status/<int:req_id>')
+    def update_req_status(req_id):
+        status = request.form.get('status')
+
+        request = ExchangeRequest.query.get(req_id)
+        if request and request.status == 'Pending':
+            book = Book.query.get(req_id)
+            if book and book.status == 'Available':
+                request.status = 'Exchanged'
+                book.status = status
+                db.session.commit()
+                return jsonify(success=True)
+            return jsonify(success=False)
+        return jsonify(success=False)
+        
+        
+        
     @app.route('/history')
     def my_history():
-        return render_template('history.html')
+        user_id = session.get('user_id')
+    
+        if not user_id:
+            return redirect('/login')
+
+        exchange_requests = ExchangeRequest.query.filter_by(requester_id=user_id).all()
+        
+        books_exchanged = Book.query.filter_by(user_id=user_id, status='Exchanged').all()
+
+        borrowed_requests = ExchangeRequest.query.filter(
+            ExchangeRequest.requester_id == user_id,
+            ExchangeRequest.status.in_(['Accepted', 'Returned'])
+        ).all()
+        borrowed_books = [req.book for req in borrowed_requests]
+
+        return render_template('history.html', exchange_requests=exchange_requests,  books_exchanged=books_exchanged,books_borrowed=borrowed_books)
+        
+        
+        
+        
+        
+    @app.route('/book-return/<int:req_id>')
+    def return_book(req_id):
+        request = ExchangeRequest.query.get(req_id)
+        if request and request.status != 'Pending':
+            book = Book.query.get(req_id)
+            if book and book.status == 'Exchanged':
+                request.status = 'Available'
+                book.status = 'Returned'
+                db.session.commit()
+                return jsonify(success=True)
+            return jsonify(success=False)
+        return jsonify(success=False)

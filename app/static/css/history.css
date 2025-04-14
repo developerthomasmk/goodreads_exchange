@@ -1,0 +1,34 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .history-container {
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .toggle-heading {
+    cursor: pointer;
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .section-content {
+    padding: 10px;
+    display: none; /* Hidden by default */
+  }
+  
+  .section-content p {
+    margin: 5px 0;
+  }
+  
