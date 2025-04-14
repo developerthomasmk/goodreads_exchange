@@ -39,9 +39,9 @@
         </div>
     </main>
 
-    <footer>
+    <!-- <footer>
         <p>&copy; 2025 Book Exchange Platform | All Rights Reserved</p>
-    </footer>
+    </footer> -->
 
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -69,10 +69,6 @@
                 .openPopup();
 
             document.getElementById("exchangeBook").addEventListener("click", function () {
-
-                const formData = new FormData();
-                formData.append("requester_id", chefId)
-                formData.append("book_id", foodId)
 
                 fetch("/exchange_book/{{ book.book_id }}", { method: "POST" })
                     .then(response => response.json())
