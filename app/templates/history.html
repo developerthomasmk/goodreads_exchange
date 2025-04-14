@@ -1,35 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>History</title>
   <link rel="stylesheet" href="/static/css//history.css">
 </head>
+
 <body>
   <div class="history-container">
     <div class="section">
       <h2 class="toggle-heading">Exchange Requests</h2>
-      <div class="section-content">
+      <div class="section-content show">
         {% for req in exchange_requests %}
-          <p>You requested "{{ req.book.title }}" from {{ req.receiver.name }} - Status: {{ req.status }}</p>
+        <div class="card">
+
+          <div class="card-one">
+            <img src="{{ url_for('image_file', filename='') }}{{ req.book.image }}" alt="{{ req.book.title }}"
+              class="book-image">
+          </div>
+
+          <div class="card-two">
+            <h3>{{ req.book.title }}</h3>
+            <p>Requested from: {{ req.receiver.name }}</p>
+            <p>Status: <strong>{{ req.status }}</strong></p>
+          </div>
+
+          <div class="card-three">
+            {% if req.status == 'Pending' %}
+            <button class="accept-btn" onclick="updateRequest('{{ req.request_id }}', 'Accepted')">Accept</button>
+            <button class="decline-btn" onclick="updateRequest('{{ req.request_id }}', 'Declined')">Decline</button>
+            {% else %}
+            <p><strong>Status:</strong> {{ req.status }}</p>
+            {% endif %}
+          </div>
+
+        </div>
+        {% else %}
+        <p>No exchange requests yet.</p>
         {% endfor %}
       </div>
     </div>
 
     <div class="section">
       <h2 class="toggle-heading">Books Exchanged</h2>
-      <div class="section-content">
-        {% for book in my_books_in_exchange %}
-          <p>{{ book.title }} by {{ book.author }} - Status: {{ book.status }}</p>
+      <div class="section-content show">
+        {% for book in books_exchanged %}
+        <div class="card">
+
+          <div class="card-one">
+            <img src="{{ url_for('image_file', filename='') }}{{ req.book.image }}" alt="{{ req.book.title }}"
+              class="book-image">
+          </div>
+
+          <div class="card-two">
+            <h3>{{ req.book.title }}</h3>
+            <p>Requested from: {{ req.receiver.name }}</p>
+            <p>Status: <strong>{{ req.status }}</strong></p>
+          </div>
+
+        </div>
+        {% else %}
+        <p>No books have been exchanged yet.</p>
         {% endfor %}
       </div>
     </div>
 
     <div class="section">
       <h2 class="toggle-heading">Books Borrowed</h2>
-      <div class="section-content">
-        {% for book in borrowed_books %}
-          <p>{{ book.title }} by {{ book.author }} - Owner: {{ book.owner.name }}</p>
+      <div class="section-content show">
+        {% for book in books_borrowed %}
+        <div class="card">
+
+          <div class="card-one">
+            <img src="{{ url_for('image_file', filename='') }}{{ req.book.image }}" alt="{{ req.book.title }}"
+              class="book-image">
+          </div>
+
+          <div class="card-two">
+            <h3>{{ req.book.title }}</h3>
+            <p>Requested from: {{ req.receiver.name }}</p>
+            <p>Status: <strong>{{ req.status }}</strong></p>
+          </div>
+
+          <div class="card-three">
+            {% if req.status != 'Pending' %}
+            <button class="return-btn" onclick="returnBook('{{ req.request_id }}')">Accept</button>
+            {% else %}
+            <p><strong>Status:</strong> {{ req.status }}</p>
+            {% endif %}
+          </div>
+
+        </div>
+        {% else %}
+        <p>No borrowed books found.</p>
         {% endfor %}
       </div>
     </div>
@@ -37,6 +101,7 @@
 
   <script src="{{ url_for('static', filename='js/history.js') }}"></script>
 </body>
+
 </html>
 
 

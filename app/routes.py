@@ -219,17 +219,19 @@ def init_routes(app):
         if not user_id:
             return redirect('/login')
 
-        exchange_requests = ExchangeRequest.query.filter_by(requester_id=user_id).all()
+        exchange_requests = ExchangeRequest.query.filter_by(receiver_id=user_id).all()
+        print("A",exchange_requests, user_id)
         
         books_exchanged = Book.query.filter_by(user_id=user_id, status='Exchanged').all()
+        print("B",books_exchanged)
 
         borrowed_requests = ExchangeRequest.query.filter(
-            ExchangeRequest.requester_id == user_id,
-            ExchangeRequest.status.in_(['Accepted', 'Returned'])
+            ExchangeRequest.requester_id == user_id
         ).all()
         borrowed_books = [req.book for req in borrowed_requests]
+        print("C",borrowed_books)
 
-        return render_template('history.html', exchange_requests=exchange_requests,  books_exchanged=books_exchanged,books_borrowed=borrowed_books)
+        return render_template('history.html', exchange_requests=exchange_requests,  books_exchanged=books_exchanged, books_borrowed=borrowed_books)
         
         
         
