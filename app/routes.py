@@ -249,3 +249,10 @@ def init_routes(app):
                 return jsonify(success=True)
             return jsonify(success=False)
         return jsonify(success=False)
+    
+    
+    @app.route('/logout')
+    def logout():
+        session.clear()
+        flash('You have been logged out.', 'info')
+        return redirect(url_for('login'))

@@ -38,6 +38,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("historyBtn").addEventListener("click", function () {
         window.location.href = "/history";
     });
+
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+        window.location.href = "/logout";
+    });
 });
 
 function viewBook(bookId) {
