@@ -1,45 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/fav_icon.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-</head>
-<body>
-   
-    <header class="top-bar">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
-       
-        <div class="right-buttons">
-            <button id="myBooksBtn">📚 My Books</button>
-            <button id="historyBtn">📜 History</button>
-            <button id="logoutBtn">⏻ Logout</button>
-        </div>
-    </header>
+{% extends 'header_footer_template.html' %}
 
-    <main>
-        <section class="banner">
-            <img src="{{ url_for('static', filename='images/goodreads_banner.png') }}" alt="Banner">
-        </section>
+{% block title %}Home{% endblock %}
 
-        <div class="container">
-            <h2>Available Books for Exchange</h2>
-            <div id="booksList"></div>
-        </div>
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
 
-    </main>
 
-    <footer>
-        <p>&copy; 2025 Book Exchange Platform | All Rights Reserved</p>
-    </footer>
+{% block content %}
+<section class="banner">
+    <img src="{{ url_for('static', filename='images/goodreads_banner.png') }}" alt="Banner">
+</section>
 
-    <script>
-        const BOOKS_API_URL = "{{ url_for('get_books') }}";
-        var imageUrl = "{{ url_for('image_file', filename='') }}";
-    </script>
+<div class="container">
+    <h2>Available Books for Exchange</h2>
+    <div id="booksList"></div>
+</div>
+{% endblock %}
 
-    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
-</body>
-</html>
+{% block scripts %}
+<script>
+    const BOOKS_API_URL = "{{ url_for('get_books') }}";
+    var imageUrl = "{{ url_for('image_file', filename='') }}";
+</script>
+
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}

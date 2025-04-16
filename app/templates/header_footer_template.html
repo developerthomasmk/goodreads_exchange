@@ -7,7 +7,8 @@
     <title>{% block title %}Book Exchange{% endblock %}</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/fav_icon.png') }}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/header_footer_template.css') }}">
 
@@ -19,12 +20,20 @@
 
     {% block header %}
     <header class="top-bar">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+        <a href="/home">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+        </a>
 
         <div class="right-buttons">
-            <button id="myBooksBtn">📚 My Books</button>
-            <button id="historyBtn">📜 History</button>
-            <button id="logoutBtn">⏻ Logout</button>
+            <a href="/mybooks">
+                <button id="myBooksBtn">📚 My Books</button>
+            </a>
+            <a href="/history">
+                <button id="historyBtn">📜 History</button>
+            </a>
+            <a href="/logout">
+                <button id="logoutBtn">⏻ Logout</button>
+            </a>
         </div>
     </header>
     {% endblock %}
@@ -38,7 +47,7 @@
         <p>&copy; 2025 Book Exchange Platform | All Rights Reserved</p>
     </footer>
     {% endblock %}
-    
+
     {% block scripts %}{% endblock %}
 </body>
 

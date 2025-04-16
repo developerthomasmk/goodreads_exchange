@@ -199,16 +199,17 @@ def init_routes(app):
         
         
         
-    @app.route('/update-request-status/<int:req_id>')
+    @app.route('/update-request-status/<int:req_id>', methods=['POST'])
     def update_req_status(req_id):
         status = request.form.get('status')
 
-        request = ExchangeRequest.query.get(req_id)
-        if request and request.status == 'Pending':
-            book = Book.query.get(req_id)
+        req = ExchangeRequest.query.get(req_id)
+        if req and req.status == 'Pending':
+            book_id = req.book_id
+            book = Book.query.get(book_id)
             if book and book.status == 'Available':
-                request.status = 'Exchanged'
-                book.status = status
+                req.status = status
+                book.status = 'Exchanged'
                 db.session.commit()
                 return jsonify(success=True)
             return jsonify(success=False)
@@ -223,16 +224,24 @@ def init_routes(app):
         if not user_id:
             return redirect('/login')
 
-        exchange_requests = ExchangeRequest.query.filter_by(receiver_id=user_id).all()
+        exchange_requests = ExchangeRequest.query.filter_by(receiver_id=user_id, status='Pending').all()
         print("A",exchange_requests, user_id)
         
-        books_exchanged = Book.query.filter_by(user_id=user_id, status='Exchanged').all()
+        books_exchanged = (
+        ExchangeRequest.query
+        .join(Book, ExchangeRequest.book_id == Book.book_id)
+        .filter(
+            ExchangeRequest.receiver_id==user_id, 
+            Book.status == 'Exchanged'
+            )
+        .all()
+        )
         print("B",books_exchanged)
 
         borrowed_requests = ExchangeRequest.query.filter(
             ExchangeRequest.requester_id == user_id
         ).all()
-        borrowed_books = [req.book for req in borrowed_requests]
+        borrowed_books = [req for req in borrowed_requests]
         print("C",borrowed_books)
 
         return render_template('history.html', exchange_requests=exchange_requests,  books_exchanged=books_exchanged, books_borrowed=borrowed_books)
@@ -241,7 +250,7 @@ def init_routes(app):
         
         
         
-    @app.route('/book-return/<int:req_id>')
+    @app.route('/book-return/<int:req_id>', methods=['POST'])
     def return_book(req_id):
         request = ExchangeRequest.query.get(req_id)
         if request and request.status != 'Pending':

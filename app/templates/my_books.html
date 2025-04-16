@@ -1,47 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'header_footer_template.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Books</title>
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/fav_icon.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/mybooks.css') }}">
-</head>
+{% block title %}Register{% endblock %}
 
-<body>
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/mybooks.css') }}">
+{% endblock %}
 
-    <header class="top-bar">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
 
-        <div class="right-buttons">
-            <a href="{{url_for('my_history')}}">
-                <button id="historyBtn">📜 History</button>
-            </a>
-        </div>
-    </header>
+{% block content %}
+<div class="books-header">
+    <h1>My Books</h1>
+    <button id="addBookBtn">Add New Book</button>
+</div>
 
-    <main>
-        <div class="books-header">
-            <h1>My Books</h1>
-            <button id="addBookBtn">Add New Book</button>
-        </div>
+<div id="booksContainer" class="books-grid">
+    <!-- Books will be dynamically loaded here -->
+</div>
+{% endblock %}
 
-        <div id="booksContainer" class="books-grid">
-            <!-- Books will be dynamically loaded here -->
-        </div>
-    </main>
+{% block scripts %}
+<script>
+    var imageUrl = "{{ url_for('image_file', filename='') }}";
+</script>
 
-    <footer>
-        <p>&copy; 2025 Book Exchange Platform | All Rights Reserved</p>
-    </footer>
-
-    <script>
-        var imageUrl = "{{ url_for('image_file', filename='') }}";
-    </script>
-
-    <script src="{{ url_for('static', filename='js/mybooks.js') }}"></script>
-
-</body>
-
-</html>
+<script src="{{ url_for('static', filename='js/mybooks.js') }}"></script>
+{% endblock %}

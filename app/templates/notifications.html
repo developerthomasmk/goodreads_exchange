@@ -1,24 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Exchange Requests</title>
-  <link rel="stylesheet" href="/static/css/exchange_requests.css">
-</head>
-<body>
-  <header>
-    <h2>Exchange Requests</h2>
-  </header>
+{% extends 'header_footer_template.html' %}
 
-  <main>
-    <div id="notification-div"></div>
-  </main>
+{% block title %}Exchange Requests{% endblock %}
 
-  <footer>
-    <p>&copy; 2025 Book Exchange Platform | All Rights Reserved</p>
-  </footer>
+{% block styles %}
+<link rel="stylesheet" href="/static/css/exchange_requests.css">
+{% endblock %}
 
-  <script src="/static/js/exchange_requests.js"></script>
-</body>
-</html>
+
+{% block content %}
+<div id="notification-div"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/exchange_requests.js"></script>
+{% endblock %}

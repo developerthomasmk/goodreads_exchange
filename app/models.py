@@ -55,3 +55,17 @@ class ExchangeRequest(db.Model):
     sender = db.relationship('User', foreign_keys=[requester_id])
     receiver = db.relationship('User', foreign_keys=[receiver_id])
     book = db.relationship('Book', foreign_keys=[book_id])
+    
+    def to_dict(self):
+        return{
+            'req_id': self.request_id,
+            'requesterName': self.sender.name,
+            'receiverName': self.receiver.name,
+            'title': self.book.title,
+            'author': self.book.author,
+            'genre': self.book.genre,
+            'description': self.book.description,
+            'bookStatus': self.book.status,
+            'reqStatus': self.status,
+            'image': self.book.image,
+        }
